@@ -1,0 +1,105 @@
+window {
+    background-color: #1e1e1e;
+    color: #eeeeee;
+    border-radius: 10px;
+}
+
+headerbar {
+    background-color: #1e1e1e;
+    border: none;
+    box-shadow: none;
+    min-height: 48px;
+}
+
+headerbar windowhandle {
+    padding: 0;
+}
+
+/* Main Content */
+box.main-content {
+    background-color: #1e1e1e;
+    padding: 10px;
+}
+
+/* Input Field Styling */
+entry {
+    background-color: #333333;
+    color: #ffffff;
+    caret-color: #ffffff;
+    border-radius: 8px; 
+    padding: 6px 10px; 
+    margin: 5px 10px; /* 10px horizontal margin */
+    border: none;
+    box-shadow: none;
+    transition: all 0.2s;
+    min-height: 24px; 
+}
+
+entry:focus {
+    background-color: #444444;
+    outline: none;
+}
+
+/* Task List Styling */
+scrolledwindow {
+    background-color: transparent;
+    border: none;
+    margin: 10px 0; /* Add margin to the container itself */
+}
+
+listbox {
+    background-color: transparent;
+}
+
+/* Task List Container (Child) - Remove margin */
+.task-list-container {
+    margin: 0;
+}
+
+/* Container for rows */
+.task-row {
+    margin: 2px 10px; /* Match horizontal margin of entry (10px) */
+    padding: 2px 0;
+}
+
+/* Task Item Styling */
+checkbutton {
+    margin-right: 15px; /* Increased margin */
+    min-width: 24px;   /* Force larger checkbox */
+    min-height: 24px;
+}
+
+checkbutton check {
+    min-width: 20px; /* Inner check size */
+    min-height: 20px;
+}
+
+label {
+    color: #eeeeee;
+    font-size: 18px; /* Increased font size */
+}
+
+label.completed-label {
+    color: #888888;
+    text-decoration: line-through;
+}
+
+checkbutton.completed-check {
+    color: #888888;
+    opacity: 0.6;
+}
+
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    min-width: 6px;
+    min-height: 6px;
+    border-radius: 10px;
+    background-color: #444444;
+}
+
+scrollbar slider:hover {
+    background-color: #666666;
+}

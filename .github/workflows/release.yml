@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-4-dev build-essential libssl-dev pkg-config
+
+      - name: Build Release
+        working-directory: client
+        run: cargo build --release
+
+      - name: Create Tarball
+        run: |
+          mkdir release
+          cp client/target/release/client release/go2do
+          cp client/style.css release/
+          cp logo_transparent.png release/
+          tar -czvf go2do-linux-x64.tar.gz -C release .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: go2do-linux-x64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

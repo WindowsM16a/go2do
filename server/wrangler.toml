@@ -1,0 +1,11 @@
+name = "go2do-server"
+compatibility_date = "2024-02-08"
+main = "src/index.ts"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "go2do-db"
+database_id = "e0c0f9a2-9d3b-4c1e-8f2a-7b3d4e5f6a1b" # Placeholder ID
+
+[vars]
+ENVIRONMENT = "dev"

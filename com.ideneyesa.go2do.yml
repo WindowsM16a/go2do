@@ -1,0 +1,30 @@
+app-id: com.ideneyesa.go2do
+runtime: org.gnome.Platform
+runtime-version: "45"
+sdk: org.gnome.Sdk
+command: go2do
+finish-args:
+  # Network access for sync
+  - --share=network
+  # Display system access
+  - --socket=wayland
+  - --socket=fallback-x11
+  # Audio (optional, but good for future notifications)
+  - --socket=pulseaudio
+  # Filesystem access (optional, maybe not needed if using internal DB)
+  # - --filesystem=home
+
+modules:
+  - name: go2do
+    buildsystem: simple
+    build-commands:
+      - cargo build --release
+      - install -D target/release/client /app/bin/go2do
+      - install -D logo_transparent.png /app/share/icons/hicolor/512x512/apps/com.ideneyesa.go2do.png
+      - install -D client/style.css /app/share/go2do/style.css
+    sources:
+      - type: dir
+        path: .
+    build-options:
+      env:
+        CARGO_HOME: /run/build/go2do/cargo

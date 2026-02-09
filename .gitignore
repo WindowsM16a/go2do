@@ -1,0 +1,10 @@
+# Client (Rust)
+client/target/
+client/go2do.db
+
+# Server (Node)
+server/node_modules/
+server/.wrangler/
+
+# System
+**/.DS_Store
