@@ -8,7 +8,7 @@ You can install the desktop client locally using the provided script:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/go2do.git
+git clone https://github.com/WindowsM16a/go2do.git
 cd go2do
 
 # Build & Install
@@ -27,7 +27,7 @@ This will:
 
 - **Linux**: Fully supported (GNOME, KDE, XFCE, etc.).
   - **Source**: Build via `./install.sh`.
-  - **Releases**: Download pre-built binaries from the [GitHub Releases](https://github.com/yourusername/go2do/releases) page.
+  - **Releases**: Download pre-built binaries from the [GitHub Releases](https://github.com/WindowsM16a/go2do/releases) page.
   - **Flatpak**: Manifest available (see `com.ideneyesa.go2do.yml`).
 - **Windows**: Planned for V2.
 - **macOS**: Planned for V2.
