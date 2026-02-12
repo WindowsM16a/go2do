@@ -1,4 +1,4 @@
-# Client (Rust)
+]' # Client (Rust)
 client/target/
 client/go2do.db
 
@@ -8,3 +8,4 @@ server/.wrangler/
 
 # System
 **/.DS_Store
+ 
