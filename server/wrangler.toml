@@ -7,5 +7,10 @@ binding = "DB"
 database_name = "go2do-db"
 database_id = "e0c0f9a2-9d3b-4c1e-8f2a-7b3d4e5f6a1b" # Placeholder ID
 
+[[kv_namespaces]]
+binding = "GO2DO_KV"
+id = "2d0c2e3da37449a0818293946cc56041" # Placeholder - update if real ID is needed
+preview_id = "preview_kv_id"
+
 [vars]
 ENVIRONMENT = "dev"

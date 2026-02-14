@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Go2Do
+Comment=A simple to-do list app
+Exec=go2do
+Icon=go2do
+Terminal=false
+Categories=Utility;GTK;
+Keywords=todo;task;list;
+StartupNotify=true

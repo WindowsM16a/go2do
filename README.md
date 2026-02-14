@@ -1,6 +1,6 @@
-# Go2Do
+# Go2Do V2
 
-A simple, robust, and beautiful to-do application with cloud sync. Built with Rust (GTK4) and Cloudflare Workers.
+A simple, robust, and beautiful to-do application with cloud sync. Built with Rust (GTK4), Next.js, and Cloudflare Workers.
 
 ## 🚀 Installation (Linux)
 
@@ -15,32 +15,53 @@ cd go2do
 ./install.sh
 ```
 
-This will:
+### Debian/Ubuntu Package (.deb)
 
-- Build the optimized release binary.
-- Install `go2do` to `~/.local/bin`.
-- Install the icon and desktop entry so it appears in your app menu.
+If you prefer a system-wide installation, you can install the `.deb` package:
 
-## 🌍 Compatibility & Distribution
+```bash
+sudo dpkg -i dist/go2do_0.1.0-1_amd64.deb
+```
 
-### 🖥️ Desktop (Current V1)
+## 🌍 Platform Status
 
-- **Linux**: Fully supported (GNOME, KDE, XFCE, etc.).
-  - **Source**: Build via `./install.sh`.
-  - **Releases**: Download pre-built binaries from the [GitHub Releases](https://github.com/WindowsM16a/go2do/releases) page.
-  - **Flatpak**: Manifest available (see `com.ideneyesa.go2do.yml`).
-- **Windows**: Planned for V2.
-- **macOS**: Planned for V2.
+### 🖥️ Desktop (Rust + GTK4)
 
-### 📱 Mobile & Web (Upcoming V2)
+- **Linux**: ✅ Native support. Package via `cargo-deb`.
+- **Windows**: 🛠️ Planned. Requires CI/CD pipeline (GitHub Actions) for stable GTK4 bundling.
+- **macOS**: 🛠️ Planned. Requires CI/CD pipeline (GitHub Actions) for signing and notarization.
 
-- **Web App**: A Next.js/React web version is planned for V2. This will allow access from **Android**, **iOS**, and any browser without installation.
-- **Sync**: All clients (Desktop & Web) will sync to the same Cloudflare backend.
+### 🌐 Web & Mobile (Next.js)
+
+- **Web App**: ✅ Live at `https://go2do.app` (or your deployment).
+- **Mobile**: ✅ Fully responsive web-view support for iOS and Android.
+
+## ⌨️ Shortcuts (Desktop)
+
+| Shortcut   | Action                                    |
+| ---------- | ----------------------------------------- |
+| `Ctrl + N` | Add New Task (opens window/focuses input) |
+| `Esc`      | Hide Task Window                          |
+| `Ctrl + Q` | Quit Application                          |
+| `Ctrl + R` | Force Sync Now                            |
 
 ## 🛠️ Development
 
 ### Prerequisites
 
-- Rust (Cargo)
-- GTK4 development headers (`libgtk-4-dev` on Debian/Ubuntu)
-- Node.js & npm (for Server)
+- **Desktop**: Rust, GTK4 dev headers (`libgtk-4-dev`), `libadwaita-1-dev`.
+- **Web**: Node.js 18+, npm.
+- **Server**: Cloudflare Wrangler CLI.
+
+### Building
+
+```bash
+# Desktop
+cd client && cargo build --release
+
+# Web
+cd web && npm install && npm run dev
+
+# Server
+cd server && npm run dev
+```

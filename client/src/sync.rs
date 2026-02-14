@@ -17,7 +17,8 @@ pub struct Task {
     pub device_id: String,
 }
 
-fn deserialize_bool_from_anything<'de, D>(deserializer: D) -> Result<bool, D::Error>
+// Helper for loose boolean parsing (common in JSON/SQLite interop)
+pub fn deserialize_bool_from_anything<'de, D>(deserializer: D) -> Result<bool, D::Error>
 where
     D: serde::Deserializer<'de>,
 {

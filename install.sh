@@ -2,7 +2,21 @@
 set -e
 
 echo "📦 Packaging Go2Do for local installation..."
+echo "📦 Packaging Go2Do for local installation..."
 
+# 0. Check dependencies (Debian/Ubuntu)
+if [ -f /etc/debian_version ]; then
+    echo "🔍 Checking system dependencies..."
+    MISSING=""
+    dpkg -s libgtk-4-dev &> /dev/null || MISSING="$MISSING libgtk-4-dev"
+    dpkg -s libadwaita-1-dev &> /dev/null || MISSING="$MISSING libadwaita-1-dev"
+    
+    if [ -n "$MISSING" ]; then
+        echo "⚠️ Missing dependencies: $MISSING"
+        echo "   Installing them now (requires sudo)..."
+        sudo apt-get update && sudo apt-get install -y $MISSING
+    fi
+fi
 # 1. Build release binary
 echo "🔨 Building release binary..."
 cd client

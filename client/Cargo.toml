@@ -2,11 +2,12 @@
 name = "client"
 version = "0.1.0"
 edition = "2024"
+description = "A minimalist to-do list application with local-first sync."
 
 [dependencies]
 gtk4 = "0.7"
 rusqlite = { version = "0.29", features = ["bundled"] }
-reqwest = { version = "0.11", features = ["json"] }
+reqwest = { version = "0.11", features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = { version = "1", features = ["full"] }
@@ -15,5 +16,24 @@ env_logger = "0.10"
 log = "0.4"
 ksni = "0.2"
 anyhow = "1.0"
-uuid = { version = "1.4", features = ["v4", "fast-rng", "macro-diagnostics"] }
+uuid = { version = "1.4", features = ["v4", "fast-rng", "macro-diagnostics", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
+keyring = "3.6.3"
+
+[package.metadata.deb]
+name = "go2do"
+maintainer = "Ideneyesa <fleetlinq.on@gmail.com>"
+copyright = "2024, Ideneyesa"
+license-file = ["LICENSE", "4"]
+extended-description = """
+Go2Do is a minimalist task management application with local-first sync capabilities.
+"""
+depends = "$auto" 
+section = "utility"
+priority = "optional"
+assets = [
+    ["target/release/client", "usr/bin/go2do", "755"],
+    ["style.css", "usr/share/go2do/style.css", "644"],
+    ["assets/icon.jpg", "usr/share/icons/hicolor/512x512/apps/go2do.png", "644"],
+    ["assets/go2do.desktop", "usr/share/applications/go2do.desktop", "644"]
+]

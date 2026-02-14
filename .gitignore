@@ -1,12 +1,19 @@
-]' # Client (Rust)
-client/target/
-client/go2do.db
+*.log
+.env
+.dev.vars
+.wrangler/
+node_modules/
+dist/
+worker/
 
-# Server (Node)
-server/node_modules/
-server/.wrangler/
+# IDE
+.vscode/
+.idea/
 
-# System
-**/.DS_Store
- 
- 
+# Rust
+target/
+**/*.rs.bk
+
+# Misc
+.DS_Store
+*.swp

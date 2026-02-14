@@ -1,4 +1,4 @@
-name: Release
+name: Release Build
 
 on:
   push:
@@ -6,33 +6,48 @@ on:
       - "v*"
 
 jobs:
-  build-linux:
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
-      - name: Install Dependencies
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-4-dev build-essential libssl-dev pkg-config libdbus-1-dev
+          sudo apt-get install -y libgtk-4-dev libadwaita-1-dev
+          cargo install cargo-deb
+
+      - name: Install Dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          # Vcpkg or MSYS2 is typically used for GTK4 on Windows in CI
+          # This is a complex setup that requires a custom runner or pre-configured environment
+          echo "Windows build requires specific GTK4 environment setup"
 
       - name: Build Release
-        working-directory: client
-        run: cargo build --release
-
-      - name: Create Tarball
         run: |
-          mkdir release
-          cp client/target/release/client release/go2do
-          cp client/style.css release/
-          cp logo_transparent.png release/
-          tar -czvf go2do-linux-x64.tar.gz -C release .
+          cd client
+          cargo build --release
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - name: Package .deb (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cd client
+          cargo deb
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          files: go2do-linux-x64.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: go2do-${{ matrix.os }}
+          path: |
+            client/target/release/client
+            client/target/debian/*.deb

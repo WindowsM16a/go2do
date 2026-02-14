@@ -1,4 +1,5 @@
 use rusqlite::{params, Connection, Result};
+use rusqlite::OptionalExtension;
 use crate::sync::Task;
 
 pub fn init() -> Result<Connection> {
@@ -123,17 +124,24 @@ pub fn upsert_task(conn: &Connection, task: &Task) -> Result<()> {
     Ok(())
 }
 
-use rusqlite::OptionalExtension;
 // Helper to store/get last sync time
 pub fn get_last_sync_timestamp(conn: &Connection) -> Result<i64> {
-    conn.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT)", [])?;
-    let mut stmt = conn.prepare("SELECT value FROM meta WHERE key = 'last_sync'")?;
-    let timestamp: Option<String> = stmt.query_row([], |row| row.get(0)).optional()?;
-    
-    Ok(timestamp.and_then(|t| t.parse::<i64>().ok()).unwrap_or(0))
+    get_meta(conn, "last_sync").map(|s| s.parse::<i64>().unwrap_or(0))
 }
 
 pub fn set_last_sync_timestamp(conn: &Connection, ts: i64) -> Result<()> {
-    conn.execute("INSERT OR REPLACE INTO meta (key, value) VALUES ('last_sync', ?1)", params![ts.to_string()])?;
+    set_meta(conn, "last_sync", &ts.to_string())
+}
+
+pub fn get_meta(conn: &Connection, key: &str) -> Result<String> {
+    conn.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT)", [])?;
+    let mut stmt = conn.prepare("SELECT value FROM meta WHERE key = ?1")?;
+    let val: Option<String> = stmt.query_row(params![key], |row| row.get(0)).optional()?;
+    Ok(val.unwrap_or_default())
+}
+
+pub fn set_meta(conn: &Connection, key: &str, value: &str) -> Result<()> {
+    conn.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT)", [])?;
+    conn.execute("INSERT OR REPLACE INTO meta (key, value) VALUES (?1, ?2)", params![key, value])?;
     Ok(())
 }
