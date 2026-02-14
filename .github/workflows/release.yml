@@ -37,12 +37,23 @@ jobs:
 
       - name: Install Dependencies (Windows)
         if: matrix.os == 'windows-latest'
-        run: |
-          vcpkg install gtk:x64-windows
-          echo "VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT" >> $GITHUB_ENV
-          echo "PKG_CONFIG_PATH=$VCPKG_INSTALLATION_ROOT/installed/x64-windows/lib/pkgconfig" >> $GITHUB_ENV
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            git
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-rust
+            mingw-w64-x86_64-gtk4
+            mingw-w64-x86_64-gettext
+            mingw-w64-x86_64-libxml2
+            mingw-w64-x86_64-librsvg
+            mingw-w64-x86_64-pkgconf
+          path-type: inherit
 
       - name: Build Release
+        shell: bash
         run: |
           cd client
           cargo build --release
