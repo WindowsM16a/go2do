@@ -33,7 +33,7 @@ sudo dpkg -i dist/go2do_0.1.0-1_amd64.deb
 
 ### 🌐 Web & Mobile (Next.js)
 
-- **Web App**: ✅ Live at `https://go2do.app` (or your deployment).
+- **Web App**: ✅ Live at [go2do-zeta.vercel.app](https://go2do-zeta.vercel.app).
 - **Mobile**: ✅ Fully responsive web-view support for iOS and Android.
 
 ## ⌨️ Shortcuts (Desktop)

@@ -198,13 +198,35 @@ pub fn build_ui(app: &Application, cmd_tx: Sender<SyncCommand>) {
         entry_clone.grab_focus();
     });
 
-    // Close on Escape
+    // Keyboard Shortcuts
     let key_controller = gtk4::EventControllerKey::new();
-    let window_close = window.clone();
-    key_controller.connect_key_pressed(move |_, key, _, _| {
+    let window_copy = window.clone();
+    let entry_focus = entry.clone();
+    let cmd_tx_shortcuts = cmd_tx.clone();
+
+    key_controller.connect_key_pressed(move |_, key, _, state| {
+        // Escape to hide/close
         if key == gtk4::gdk::Key::Escape {
-            window_close.close();
+            window_copy.close();
             return glib::Propagation::Stop;
+        }
+
+        // Ctrl Shortcuts
+        if state.contains(gtk4::gdk::ModifierType::CONTROL_MASK) {
+            match key {
+                gtk4::gdk::Key::n | gtk4::gdk::Key::N => {
+                    entry_focus.grab_focus();
+                    return glib::Propagation::Stop;
+                }
+                gtk4::gdk::Key::r | gtk4::gdk::Key::R => {
+                    let _ = cmd_tx_shortcuts.send(SyncCommand::ForceSync);
+                    return glib::Propagation::Stop;
+                }
+                gtk4::gdk::Key::q | gtk4::gdk::Key::Q => {
+                    std::process::exit(0);
+                }
+                _ => {}
+            }
         }
         glib::Propagation::Proceed
     });
