@@ -1,6 +1,6 @@
 [package]
 name = "client"
-version = "2.0.1"
+version = "2.0.2"
 edition = "2024"
 description = "A minimalist to-do list application with local-first sync."
 
@@ -14,8 +14,10 @@ tokio = { version = "1", features = ["full"] }
 once_cell = "1.18"
 env_logger = "0.10"
 log = "0.4"
-ksni = "0.2"
 anyhow = "1.0"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+ksni = "0.2"
 uuid = { version = "1.4", features = ["v4", "fast-rng", "macro-diagnostics", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 keyring = "3.6.3"

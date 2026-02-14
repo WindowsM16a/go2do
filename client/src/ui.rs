@@ -225,6 +225,15 @@ pub fn build_ui(app: &Application, cmd_tx: Sender<SyncCommand>) {
                 gtk4::gdk::Key::q | gtk4::gdk::Key::Q => {
                     std::process::exit(0);
                 }
+                gtk4::gdk::Key::comma => {
+                    let config = Config::load();
+                    show_settings_dialog(&window_copy, config.api_url, cmd_tx_shortcuts.clone());
+                    return glib::Propagation::Stop;
+                }
+                gtk4::gdk::Key::h | gtk4::gdk::Key::H => {
+                    show_help_dialog(&window_copy);
+                    return glib::Propagation::Stop;
+                }
                 _ => {}
             }
         }

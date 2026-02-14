@@ -28,9 +28,10 @@ struct TrayHandler {
     sender: glib::Sender<TrayMsg>,
 }
 
+#[cfg(target_os = "linux")]
 impl ksni::Tray for TrayHandler {
     fn icon_name(&self) -> String {
-        "accessories-text-editor".into() // Reverted to standard icon
+        "accessories-text-editor".into()
     }
     
     fn id(&self) -> String {
@@ -114,10 +115,13 @@ fn main() {
     let (cmd_tx, cmd_rx) = std::sync::mpsc::channel::<SyncCommand>();
     // let cmd_tx_tray = cmd_tx.clone(); // Removed unused clone
     
-    // Start Tray Service
-    let service = ksni::TrayService::new(TrayHandler { sender: tx });
-    let _tray_handle = service.handle();
-    service.spawn();
+    // Start Tray Service (Linux Only)
+    #[cfg(target_os = "linux")]
+    {
+        let service = ksni::TrayService::new(TrayHandler { sender: tx.clone() });
+        let _tray_handle = service.handle();
+        service.spawn();
+    }
 
 
 
