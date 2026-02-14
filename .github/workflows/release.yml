@@ -5,6 +5,9 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build (${{ matrix.os }})
@@ -26,12 +29,18 @@ jobs:
           sudo apt-get install -y libgtk-4-dev libadwaita-1-dev
           cargo install cargo-deb
 
+      - name: Install Dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install gtk4 adwaita-icon-theme libadwaita pkg-config
+          echo "PKG_CONFIG_PATH=$(brew --prefix)/lib/pkgconfig" >> $GITHUB_ENV
+
       - name: Install Dependencies (Windows)
         if: matrix.os == 'windows-latest'
         run: |
-          # Vcpkg or MSYS2 is typically used for GTK4 on Windows in CI
-          # This is a complex setup that requires a custom runner or pre-configured environment
-          echo "Windows build requires specific GTK4 environment setup"
+          vcpkg install gtk:x64-windows
+          echo "VCPKG_ROOT=$VCPKG_INSTALLATION_ROOT" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=$VCPKG_INSTALLATION_ROOT/installed/x64-windows/lib/pkgconfig" >> $GITHUB_ENV
 
       - name: Build Release
         run: |
