@@ -52,7 +52,15 @@ jobs:
             mingw-w64-x86_64-pkgconf
           path-type: inherit
 
-      - name: Build Release
+      - name: Build Release (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: msys2 {0}
+        run: |
+          cd client
+          cargo build --release
+
+      - name: Build Release (Unix)
+        if: matrix.os != 'windows-latest'
         shell: bash
         run: |
           cd client
