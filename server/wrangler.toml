@@ -5,11 +5,11 @@ main = "src/index.ts"
 [[d1_databases]]
 binding = "DB"
 database_name = "go2do-db"
-database_id = "e0c0f9a2-9d3b-4c1e-8f2a-7b3d4e5f6a1b" # Placeholder ID
+database_id = "97f6097a-b42d-433c-b442-640561865bdd"
 
 [[kv_namespaces]]
 binding = "GO2DO_KV"
-id = "2d0c2e3da37449a0818293946cc56041" # Placeholder - update if real ID is needed
+id = "7ea2b9bfc3b740209e33859c5140bea3"
 preview_id = "preview_kv_id"
 
 [vars]

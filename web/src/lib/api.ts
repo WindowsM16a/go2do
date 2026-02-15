@@ -1,7 +1,8 @@
 import type { Task, SyncRequest, SyncResponse, AuthResponse } from "./types";
 
 // the backend lives here. hardcoded for now, env var later.
-let API_BASE = "https://go2do-server.ideneyesa.workers.dev";
+let API_BASE = "https://go2do-server.go2dodev.workers.dev";
+
 
 // swap to local dev server if running locally
 if (typeof window !== "undefined" && window.location.hostname === "localhost") {
