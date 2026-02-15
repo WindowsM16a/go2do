@@ -72,10 +72,11 @@ jobs:
           cd client
           cargo deb
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: go2do-${{ matrix.os }}
-          path: |
+          files: |
             client/target/release/client
+            client/target/release/client.exe
             client/target/debian/*.deb

@@ -23,13 +23,35 @@ If you prefer a system-wide installation, you can install the `.deb` package:
 sudo dpkg -i dist/go2do_0.1.0-1_amd64.deb
 ```
 
-## 🌍 Platform Status
+## 📥 Installation
 
-### 🖥️ Desktop (Rust + GTK4)
+**[Download the latest release for your platform here.](https://github.com/WindowsM16a/go2do/releases/latest)**
 
-- **Linux**: ✅ Native support. Package via `cargo-deb`.
-- **Windows**: 🛠️ Planned. Requires CI/CD pipeline (GitHub Actions) for stable GTK4 bundling.
-- **macOS**: 🛠️ Planned. Requires CI/CD pipeline (GitHub Actions) for signing and notarization.
+### 🪟 Windows
+
+1. Download `client.exe` from the latest release.
+2. Run the executable.
+   _(Note: You may need to "Run anyway" if Windows Defender warns about an unrecognized app, as we are not yet code-signed)._
+
+### 🍏 macOS
+
+1. Download the `client` binary from the latest release.
+2. Open Terminal, navigate to downloads, and make it executable:
+   ```bash
+   chmod +x client
+   ./client
+   ```
+   _(Note: You may need to allow the app in System Settings > Privacy & Security if macOS blocks it)._
+
+### 🐧 Linux
+
+1. Download the `.deb` package.
+2. Install via apt:
+   ```bash
+   sudo dpkg -i go2do_*.deb
+   sudo apt-get install -f # Fix dependencies if needed
+   ```
+3. Run `go2do` from your terminal or app launcher.
 
 ### 🌐 Web & Mobile (Next.js)
 
@@ -44,6 +66,8 @@ sudo dpkg -i dist/go2do_0.1.0-1_amd64.deb
 | `Esc`      | Hide Task Window                          |
 | `Ctrl + Q` | Quit Application                          |
 | `Ctrl + R` | Force Sync Now                            |
+| `Ctrl + ,` | Open Settings (Windows/macOS fallback)    |
+| `Ctrl + H` | Open Shortcuts (Windows/macOS fallback)   |
 
 ## 🛠️ Development
 
